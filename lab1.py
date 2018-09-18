@@ -1,7 +1,6 @@
 # Import the necessary packages and modules
 import matplotlib.pyplot as plt
 import numpy as np
-import math
 
 Vp = 110*np.sqrt(2)
 L = 0.5
