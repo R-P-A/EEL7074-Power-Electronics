@@ -17,21 +17,28 @@ out_fwrr = out_fwrr.rename(columns = {'Iin (A)' : 'Iin (A) x 83,33'})
 plt.plot(out_fwrr.index, out_fwrr['Vin (V)'])
 plt.plot(out_fwrr.index, out_fwrr['Iin (A) x 83,33'])
 plt.plot(out_fwrr.index, out_fwrr['P (W)'])
+plt.xlabel('Tempo (s)')
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/orig_full_wave_rectfier_r_load.pdf')
+plt.savefig('img/lab2/orig_full_wave_rectfier_r_load.png')
+plt.clf()
 
 # Full Wave Rectfier with RL Load
 ch1_fwrrl = pd.read_csv('src_img/lab2/ALL0018/F0018CH1.CSV', usecols=[3,4], index_col=[0], header=None, names=['t (s)', 'Vin (V)'])
 ch2_fwrrl = pd.read_csv('src_img/lab2/ALL0018/F0018CH2.CSV', usecols=[3,4], index_col=[0], header=None, names=['t (s)', 'Iin (A)'])
 mth_fwrrl = pd.read_csv('src_img/lab2/ALL0018/F0018MTH.CSV', usecols=[3,4], index_col=[0], header=None, names=['t (s)', 'P (W)'])
-out_fwrrl = pd.concat([ch1_fwrrl, ch2_fwrrl, mth_fwrrl], axis=1)
-out_fwrrl['Iin (A)'] = out_fwrrl['Iin (A)']*83.33
-out_fwrrl.plot()
+out_fwrrl = pd.concat([ch1_fwrrl, ch2_fwrrl*83.33, mth_fwrrl], axis=1)
+out_fwrrl = out_fwrrl.rename(columns = {'Iin (A)' : 'Iin (A) x 83,33'})
+plt.plot(out_fwrrl.index, out_fwrrl['Vin (V)'])
+plt.plot(out_fwrrl.index, out_fwrrl['Iin (A) x 83,33'])
+plt.plot(out_fwrrl.index, out_fwrrl['P (W)'])
+plt.xlabel('Tempo (s)')
+plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/orig_full_wave_rectfier_rl_load.pdf')
+plt.savefig('img/lab2/orig_full_wave_rectfier_rl_load.png')
+plt.clf()
     
 # Plotting Original FFT and saving for reference
 # Full Wave Rectfier with R Load
@@ -39,15 +46,15 @@ fft_fwrr = pd.read_csv('src_img/lab2/ALL0016/F0016FFT.CSV', usecols=[3,4], index
 fft_fwrr.plot()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/orig_full_wave_rectfier_r_load_fourier.pdf')
+plt.savefig('img/lab2/orig_full_wave_rectfier_r_load_fourier.png')
 
 # Full Wave Rectfier with RL Load
 fft_fwrrl = pd.read_csv('src_img/lab2/ALL0019/F0019FFT.CSV', usecols=[3,4], index_col=[0], header=None, names=['f (Hz)', 'Módulo (dB)'])
 fft_fwrrl.plot()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/orig_full_wave_rectfier_r_load_fourier.pdf')
-plt.savefig('img/lab2/orig_full_wave_rectfier_rl_load_fourier.pdf')
+plt.savefig('img/lab2/orig_full_wave_rectfier_r_load_fourier.png')
+plt.savefig('img/lab2/orig_full_wave_rectfier_rl_load_fourier.png')
 
 # -------------------------------------------------------------------------------------------------
 
@@ -73,8 +80,8 @@ vin_r = ch1_fwrr['Vin (V)'].values
 vin_r = vin_r[0:number_samples]
 fft_vin_r = calculate_fourier(time, vin_r)
 fft_vin_r[1] = fft_vin_r[1] / number_samples
-thd = calculate_thd(fft_vin_r[1], 20)
-print("THD: {}".format(thd))
+thd = calculate_thd(fft_vin_r[1], 50)
+print("THD Vin R: {}".format(thd))
 
 figure, plot = plt.subplots(2,1)
 plot[0].plot(time, vin_r)
@@ -89,7 +96,7 @@ plot[1].set_ylabel('Tensão (V)')
 plot[1].set_xlim(-1000,1000)
 plot[1].grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/vin_r_fourier.pdf')
+plt.savefig('img/lab2/vin_r_fourier.png')
 
 # Calculating the Frequency Spectrum of the Current Input for R load
 time = ch2_fwrr.index.values
@@ -98,8 +105,10 @@ iin_r = ch2_fwrr['Iin (A)'].values
 iin_r = iin_r[0:number_samples]
 fft_iin_r = calculate_fourier(time, iin_r)
 fft_iin_r[1] = fft_iin_r[1] / number_samples
-thd = calculate_thd(fft_iin_r[1], 20)
-print("THD: {}".format(thd))
+thd = calculate_thd(fft_iin_r[1], 50)
+print("THD Iin R: {}".format(thd))
+fp = 1 / np.sqrt(1 + thd**2)
+print("FP R: {}".format(fp))
 
 figure, plot = plt.subplots(2,1)
 plot[0].plot(time, iin_r)
@@ -114,7 +123,7 @@ plot[1].set_ylabel('Corrente (A)')
 plot[1].set_xlim(-1000,1000)
 plot[1].grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/iin_r_fourier.pdf')
+plt.savefig('img/lab2/iin_r_fourier.png')
 
 # Calculating the Frequency Spectrum of the Voltage Input for RL
 time = ch1_fwrrl.index.values
@@ -123,8 +132,8 @@ vin_rl = ch1_fwrrl['Vin (V)'].values
 vin_rl = vin_rl[0:number_samples]
 fft_vin_rl = calculate_fourier(time, vin_rl)
 fft_vin_rl[1] = fft_vin_rl[1]/number_samples
-thd = calculate_thd(fft_vin_rl[1], 20)
-print("THD: {}".format(thd))
+thd = calculate_thd(fft_vin_rl[1], 50)
+print("THD Vin RL: {}".format(thd))
 
 figure, plot = plt.subplots(2,1)
 plot[0].plot(time, vin_rl)
@@ -139,7 +148,7 @@ plot[1].set_ylabel('Tensão (V)')
 plot[1].set_xlim(-1000,1000)
 plot[1].grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/vin_rl_fourier.pdf')
+plt.savefig('img/lab2/vin_rl_fourier.png')
 
 # Calculating the Frequency Spectrum of the Current Input for RL load
 time = ch2_fwrrl.index.values
@@ -148,8 +157,10 @@ iin_rl = ch2_fwrrl['Iin (A)'].values
 iin_rl = iin_rl[0:number_samples]
 fft_iin_rl = calculate_fourier(time, iin_rl)
 fft_iin_rl[1] = fft_iin_rl[1]/number_samples
-thd = calculate_thd(fft_iin_rl[1], 20)
-print("THD: {}".format(thd))
+thd = calculate_thd(fft_iin_rl[1], 50)
+print("THD Iin RL: {}".format(thd))
+fp = 1 / np.sqrt(1 + thd**2)
+print("FP RL: {}".format(fp))
 
 figure, plot = plt.subplots(2,1)
 plot[0].plot(time, iin_rl)
@@ -164,4 +175,4 @@ plot[1].set_ylabel('Corrente (A)')
 plot[1].set_xlim(-1000,1000)
 plot[1].grid(True)
 plt.tight_layout()
-plt.savefig('img/lab2/iin_rl_fourier.pdf')
+plt.savefig('img/lab2/iin_rl_fourier.png')
