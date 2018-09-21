@@ -60,15 +60,19 @@ def calculate_thd(freq_fourier, fourier):
     # Calculating Harmonics in multiple of 60 Hz
     fourier_harmonics = []
     counter = 0
-    for i in range(100):
+    for i in range(9):
         if i % 2 == 0:
-            if (i <= 2):
+            if (i == 0):
                 interpol = np.polyfit(freq_fourier[counter+1:counter+4], np.abs(fourier[counter+1:counter+4]), 2)
                 fourier_harmonic = interpol[0]*((60*(i+1))**2) + interpol[1]*(60*(i+1)) + interpol[2]
                 fourier_harmonics.append(fourier_harmonic)
+                print(np.abs(fourier[counter+1:counter+4]))
+                print(fourier_harmonics[i])
             else:
                 interpol = np.polyfit(freq_fourier[counter+1:counter+3], np.abs(fourier[counter+1:counter+3]), 1)
                 fourier_harmonic = interpol[0]*(60*(i+1)) + interpol[1]
+                print(np.abs(fourier[counter+1:counter+3]))
+                print(fourier_harmonic)
                 fourier_harmonics.append(fourier_harmonic)
         else:
             counter = counter + 3
@@ -76,7 +80,7 @@ def calculate_thd(freq_fourier, fourier):
     
     # Calculando THD
     thd = 0
-    for i in range(1,100):
+    for i in range(1,9):
         thd = thd + (fourier_harmonics[i])**2
     thd = np.sqrt(thd) / fourier_harmonics[0]
     return thd
