@@ -6,7 +6,6 @@ lib/
 *.json
 *.png
 *.BMP
-*.pdf
 
 # Python
 *.pyc
