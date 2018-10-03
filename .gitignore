@@ -1,7 +1,12 @@
 bin/
 include/
 lib/
+
+# Images
 *.json
 *.png
 *.BMP
 *.pdf
+
+# Python
+*.pyc
