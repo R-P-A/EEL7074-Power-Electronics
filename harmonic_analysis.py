@@ -16,6 +16,7 @@ def plot_oscope_original(
         mth_name = "",
         ch1_2_scale = "",
         xlimits = "",
+        ylimits = "",
         orig_path_ch1 = "",
         orig_path_ch2 = "",
         orig_path_mth = "",
@@ -47,6 +48,8 @@ def plot_oscope_original(
     plt.xlabel('Tempo (s)')
     if (xlimits != "") and (len(xlimits) == 2):
         plt.xlim(xlimits[0], xlimits[1])
+    if (ylimits != "") and (len(ylimits) == 2):
+        plt.ylim(ylimits[0], ylimits[1])
     plt.title(output_name)
     plt.legend()
     plt.grid(True)
@@ -72,7 +75,7 @@ def calculate_thd(fourier, freq0_interval, freq0_multiples = 20):
     return thd
 
 # Function to calculate and plot Original Function and Fourier Transform
-def plot_fourier_transform(number_samples, time, values, y_name, title, out_path_name, xlimits = ""):
+def plot_fourier_transform(number_samples, time, values, y_name, title, out_path_name, xlimits0 = "", xlimits1 = ""):
     # Getting the correct sample amount
     time = time[0:number_samples]
     values = values[0:number_samples]
@@ -86,14 +89,15 @@ def plot_fourier_transform(number_samples, time, values, y_name, title, out_path
     plot[0].set_title(title)
     plot[0].set_xlabel('Tempo (s)')
     plot[0].set_ylabel(y_name)
-    if len(xlimits) == 2:
-        plot[0].set_xlim(xlimits[0], xlimits[1])
+    if (xlimits0 != "") and (len(xlimits0) == 2):
+        plot[0].set_xlim(xlimits0[0], xlimits0[1])
     plot[0].grid(True)
     plot[1].stem(fft[0], np.abs(fft[1]))
     plot[1].set_title('Transformada de Fourier')
     plot[1].set_xlabel('Frequência (Hz)')
     plot[1].set_ylabel(y_name)
-    plot[1].set_xlim(0,800)
+    if (xlimits1 != "") and (len(xlimits1) == 2):
+        plot[1].set_xlim(xlimits1[0], xlimits1[1])
     plot[1].grid(True)
     plt.tight_layout()
     plt.savefig(out_path_name)
