@@ -89,6 +89,7 @@ orig_out_rl = ha.plot_oscope_original(
 
 # Calculating THD and Plotting Fourier Transforms
 
+# Input R Load
 fft_vin_r = ha.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_r.index.values,
@@ -99,6 +100,8 @@ fft_vin_r = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
+THD = ha.calculate_thd(fft_vin_r[0], fft_vin_r[1], 60, 100)
+print("THD for Voltage R Load: %s" % (THD))
 
 fft_iin_r = ha.plot_fourier_transform(
     number_samples = 2500,
@@ -110,7 +113,12 @@ fft_iin_r = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
+THD = ha.calculate_thd(fft_iin_r[0], fft_iin_r[1], 60, 100)
+print("THD for Current R Load: %s" % (THD))
+PF = 1/np.sqrt(1 + THD**2)
+print("Power Factor R Load: %s\n" % (PF))
 
+# Input RL Load
 fft_vin_rl = ha.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_rl.index.values,
@@ -121,6 +129,8 @@ fft_vin_rl = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
+THD = ha.calculate_thd(fft_vin_rl[0], fft_vin_rl[1], 60, 100)
+print("THD for Voltage RL Load: %s" % (THD))
 
 fft_iin_rl = ha.plot_fourier_transform(
     number_samples = 2500,
@@ -132,7 +142,12 @@ fft_iin_rl = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
+THD = ha.calculate_thd(fft_iin_rl[0], fft_iin_rl[1], 60, 100)
+print("THD for Current RL Load: %s" % (THD))
+PF = 1/np.sqrt(1 + THD**2)
+print("Power Factor RL Load: %s\n" % (PF))
 
+# Input RC Load
 fft_vin_rc = ha.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_rc.index.values,
@@ -143,6 +158,8 @@ fft_vin_rc = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
+THD = ha.calculate_thd(fft_vin_rc[0], fft_vin_rc[1], 60, 100)
+print("THD for Voltage RC Load: %s" % (THD))
 
 fft_iin_rc = ha.plot_fourier_transform(
     number_samples = 2500,
@@ -154,7 +171,12 @@ fft_iin_rc = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
+THD = ha.calculate_thd(fft_iin_rc[0], fft_iin_rc[1], 60, 100)
+print("THD for Current RC Load: %s" % (THD))
+PF = 1/np.sqrt(1 + THD**2)
+print("Power Factor RC Load: %s\n" % (PF))
 
+# Output R Load
 fft_vout_r = ha.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_r.index.values,
@@ -163,8 +185,21 @@ fft_vout_r = ha.plot_fourier_transform(
     title = "Tensão de Saída do Retificador de Onda Completa Trifásico Carga R",
     out_path_name = "img/lab4/fft_vout_r.png",
     xlimits0 = [-0.003, 0.003],
-    xlimits1 = [0, 2000]
+    xlimits1 = [0, 4800]
 )
+fft_vout_r_ylog = ha.plot_fourier_transform(
+    number_samples = 2083,
+    time = orig_out_r.index.values,
+    values = orig_out_r["Vout (V)"].values,
+    y_name = "Tensão (V)",
+    title = "Tensão de Saída do Retificador de Onda Completa Trifásico Carga R",
+    out_path_name = "img/lab4/fft_vout_r_log.png",
+    xlimits0 = [-0.003, 0.003],
+    xlimits1 = [0, 4800],
+    ylog = True
+)
+THD = ha.calculate_thd(fft_vout_r[0], fft_vout_r[1], 360, 100)
+print("THD for Voltage Output R Load: %s" % (THD))
 
 fft_iout_r = ha.plot_fourier_transform(
     number_samples = 2083,
@@ -174,9 +209,23 @@ fft_iout_r = ha.plot_fourier_transform(
     title = "Corrente de Saída do Retificador de Onda Completa Trifásico Carga R",
     out_path_name = "img/lab4/fft_iout_r.png",
     xlimits0 = [-0.003, 0.003],
-    xlimits1 = [0, 2000]
+    xlimits1 = [0, 4800]
 )
+fft_iout_r_ylog = ha.plot_fourier_transform(
+    number_samples = 2083,
+    time = orig_out_r.index.values,
+    values = orig_out_r["Iout (A)"].values,
+    y_name = "Corrente (A)",
+    title = "Corrente de Saída do Retificador de Onda Completa Trifásico Carga R",
+    out_path_name = "img/lab4/fft_iout_r_log.png",
+    xlimits0 = [-0.003, 0.003],
+    xlimits1 = [0, 4800],
+    ylog = True
+)
+THD = ha.calculate_thd(fft_iout_r[0], fft_iout_r[1], 360, 100)
+print("THD for Current Output R Load: %s\n" % (THD))
 
+# Output RL Load
 fft_vout_rl = ha.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rl.index.values,
@@ -185,8 +234,21 @@ fft_vout_rl = ha.plot_fourier_transform(
     title = "Tensão de Saída do Retificador de Onda Completa Trifásico Carga RL",
     out_path_name = "img/lab4/fft_vout_rl.png",
     xlimits0 = [-0.003, 0.003],
-    xlimits1 = [0, 2000]
+    xlimits1 = [0, 4800]
 )
+fft_vout_rl_ylog = ha.plot_fourier_transform(
+    number_samples = 2083,
+    time = orig_out_rl.index.values,
+    values = orig_out_rl["Vout (V)"].values,
+    y_name = "Tensão (V)",
+    title = "Tensão de Saída do Retificador de Onda Completa Trifásico Carga RL",
+    out_path_name = "img/lab4/fft_vout_rl_log.png",
+    xlimits0 = [-0.003, 0.003],
+    xlimits1 = [0, 4800],
+    ylog = True
+)
+THD = ha.calculate_thd(fft_vout_rl[0], fft_vout_rl[1], 360, 100)
+print("THD for Voltage Output RL Load: %s" % (THD))
 
 fft_iout_rl = ha.plot_fourier_transform(
     number_samples = 2083,
@@ -196,9 +258,23 @@ fft_iout_rl = ha.plot_fourier_transform(
     title = "Corrente de Saída do Retificador de Onda Completa Trifásico Carga RL",
     out_path_name = "img/lab4/fft_iout_rl.png",
     xlimits0 = [-0.003, 0.003],
-    xlimits1 = [0, 2000]
+    xlimits1 = [0, 4800]
 )
+fft_iout_rl_ylog = ha.plot_fourier_transform(
+    number_samples = 2083,
+    time = orig_out_rl.index.values,
+    values = orig_out_rl["Iout (A)"].values,
+    y_name = "Corrente (A)",
+    title = "Corrente de Saída do Retificador de Onda Completa Trifásico Carga RL",
+    out_path_name = "img/lab4/fft_iout_rl_log.png",
+    xlimits0 = [-0.003, 0.003],
+    xlimits1 = [0, 4800],
+    ylog = True
+)
+THD = ha.calculate_thd(fft_iout_rl[0], fft_iout_rl[1], 360, 100)
+print("THD for Current Output RL Load: %s\n" % (THD))
 
+# Output RC Load
 fft_vout_rc = ha.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rc.index.values,
@@ -207,8 +283,21 @@ fft_vout_rc = ha.plot_fourier_transform(
     title = "Tensão de Saída do Retificador de Onda Completa Trifásico Carga RC",
     out_path_name = "img/lab4/fft_vout_rc.png",
     xlimits0 = [-0.003, 0.003],
-    xlimits1 = [0, 2000]
+    xlimits1 = [0, 4800]
 )
+fft_vout_rc_ylog = ha.plot_fourier_transform(
+    number_samples = 2083,
+    time = orig_out_rc.index.values,
+    values = orig_out_rc["Vout (V)"].values,
+    y_name = "Tensão (V)",
+    title = "Tensão de Saída do Retificador de Onda Completa Trifásico Carga RC",
+    out_path_name = "img/lab4/fft_vout_rc_log.png",
+    xlimits0 = [-0.003, 0.003],
+    xlimits1 = [0, 4800],
+    ylog = True
+)
+THD = ha.calculate_thd(fft_vout_rc[0], fft_vout_rc[1], 360, 100)
+print("THD for Voltage Output RC Load: %s" % (THD))
 
 fft_iout_rc = ha.plot_fourier_transform(
     number_samples = 2083,
@@ -218,5 +307,18 @@ fft_iout_rc = ha.plot_fourier_transform(
     title = "Corrente de Saída do Retificador de Onda Completa Trifásico Carga RC",
     out_path_name = "img/lab4/fft_iout_rc.png",
     xlimits0 = [-0.003, 0.003],
-    xlimits1 = [0, 2000]
+    xlimits1 = [0, 4800]
 )
+fft_iout_rc_ylog = ha.plot_fourier_transform(
+    number_samples = 2083,
+    time = orig_out_rc.index.values,
+    values = orig_out_rc["Iout (A)"].values,
+    y_name = "Corrente (A)",
+    title = "Corrente de Saída do Retificador de Onda Completa Trifásico Carga RC",
+    out_path_name = "img/lab4/fft_iout_rc_log.png",
+    xlimits0 = [-0.003, 0.003],
+    xlimits1 = [0, 4800],
+    ylog = True
+)
+THD = ha.calculate_thd(fft_iout_rc[0], fft_iout_rc[1], 360, 100)
+print("THD for Current Output RC Load: %s\n" % (THD))
