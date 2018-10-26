@@ -59,13 +59,13 @@ def plot_oscope_original(
     output = pd.concat(channels, axis=1)
     return output
 
-# Function to calculate Fourier Transform
+# Calculate Fourier Transform
 def calculate_fft(time, signal):
     fourier = np.fft.fft(signal)
     fourier_freq = np.fft.fftfreq(signal.size, (time[1]-time[0]))
     return [fourier_freq, fourier]
 
-# Function to calculate Total Harmonic Distortion of a signal
+# Calculate Total Harmonic Distortion of a signal
 def calculate_thd(fourier_freq, fourier, freq0, precision = 20):
     steps_in_freq0 = int(round(freq0 / (fourier_freq[1] - fourier_freq[0])))
     thd = 0
@@ -74,7 +74,7 @@ def calculate_thd(fourier_freq, fourier, freq0, precision = 20):
     thd = np.sqrt(thd) / np.abs(fourier[steps_in_freq0])
     return thd
 
-# Function to calculate and plot Original Function and Fourier Transform
+# Calculate and plot Original Function and Fourier Transform
 def plot_fourier_transform(number_samples, time, values, y_name, title, out_path_name, xlimits0 = "", xlimits1 = "", ylog = False):
     # Getting the correct sample amount
     time = time[0:number_samples]
@@ -105,3 +105,10 @@ def plot_fourier_transform(number_samples, time, values, y_name, title, out_path
     plt.tight_layout()
     plt.savefig(out_path_name)
     return fft
+
+# Calculate Average
+def calculate_average(signal, period):
+    total = 0
+    for i in range(period):
+        total += signal[i]
+    return (total / period)

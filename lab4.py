@@ -4,13 +4,13 @@ import numpy as np
 import pandas as pd
 
 # Import my functions
-import harmonic_analysis as ha
+import numeric_analysis as na
 
 # -------------------------------------------------------------------------------------------------
 
 # Plotting original images from oscilloscope
 
-orig_in_r = ha.plot_oscope_original(
+orig_in_r = na.plot_oscope_original(
     output_name = "Retificador de Onda Completa Trifásico Carga R - Entrada",
     ch1_name = "Vin (V)",
     ch2_name = "Iin (A)",
@@ -23,7 +23,7 @@ orig_in_r = ha.plot_oscope_original(
     output_path = "img/lab4/orig_in_r.png"
 )
 
-orig_in_rl = ha.plot_oscope_original(
+orig_in_rl = na.plot_oscope_original(
     output_name = "Retificador de Onda Completa Trifásico Carga RL - Entrada",
     ch1_name = "Vin (V)",
     ch2_name = "Iin (A)",
@@ -36,7 +36,7 @@ orig_in_rl = ha.plot_oscope_original(
     output_path = "img/lab4/orig_in_rl.png"
 )
 
-orig_in_rc = ha.plot_oscope_original(
+orig_in_rc = na.plot_oscope_original(
     output_name = "Retificador de Onda Completa Trifásico Carga RC - Entrada",
     ch1_name = "Vin (V)",
     ch2_name = "Iin (A)",
@@ -49,7 +49,7 @@ orig_in_rc = ha.plot_oscope_original(
     output_path = "img/lab4/orig_in_rc.png"
 )
 
-orig_out_r = ha.plot_oscope_original(
+orig_out_r = na.plot_oscope_original(
     output_name = "Retificador de Onda Completa Trifásico Carga R - Saída",
     ch1_name = "Vout (V)",
     ch2_name = "Iout (A)",
@@ -61,7 +61,7 @@ orig_out_r = ha.plot_oscope_original(
     output_path = "img/lab4/orig_out_r.png"
 )
 
-orig_out_rc = ha.plot_oscope_original(
+orig_out_rc = na.plot_oscope_original(
     output_name = "Retificador de Onda Completa Trifásico Carga RC - Saída",
     ch1_name = "Vout (V)",
     ch2_name = "Iout (A)",
@@ -73,7 +73,7 @@ orig_out_rc = ha.plot_oscope_original(
     output_path = "img/lab4/orig_out_rc.png"
 )
 
-orig_out_rl = ha.plot_oscope_original(
+orig_out_rl = na.plot_oscope_original(
     output_name = "Retificador de Onda Completa Trifásico Carga RL - Saída",
     ch1_name = "Vout (V)",
     ch2_name = "Iout (A)",
@@ -90,7 +90,7 @@ orig_out_rl = ha.plot_oscope_original(
 # Calculating THD and Plotting Fourier Transforms
 
 # Input R Load
-fft_vin_r = ha.plot_fourier_transform(
+fft_vin_r = na.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_r.index.values,
     values = orig_in_r["Vin (V)"].values,
@@ -100,10 +100,10 @@ fft_vin_r = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
-THD = ha.calculate_thd(fft_vin_r[0], fft_vin_r[1], 60, 100)
+THD = na.calculate_thd(fft_vin_r[0], fft_vin_r[1], 60, 100)
 print("THD for Voltage R Load: %s" % (THD))
 
-fft_iin_r = ha.plot_fourier_transform(
+fft_iin_r = na.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_r.index.values,
     values = orig_in_r["Iin (A)"].values,
@@ -113,13 +113,13 @@ fft_iin_r = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
-THD = ha.calculate_thd(fft_iin_r[0], fft_iin_r[1], 60, 100)
+THD = na.calculate_thd(fft_iin_r[0], fft_iin_r[1], 60, 100)
 print("THD for Current R Load: %s" % (THD))
 PF = 1/np.sqrt(1 + THD**2)
 print("Power Factor R Load: %s\n" % (PF))
 
 # Input RL Load
-fft_vin_rl = ha.plot_fourier_transform(
+fft_vin_rl = na.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_rl.index.values,
     values = orig_in_rl["Vin (V)"].values,
@@ -129,10 +129,10 @@ fft_vin_rl = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
-THD = ha.calculate_thd(fft_vin_rl[0], fft_vin_rl[1], 60, 100)
+THD = na.calculate_thd(fft_vin_rl[0], fft_vin_rl[1], 60, 100)
 print("THD for Voltage RL Load: %s" % (THD))
 
-fft_iin_rl = ha.plot_fourier_transform(
+fft_iin_rl = na.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_rl.index.values,
     values = orig_in_rl["Iin (A)"].values,
@@ -142,13 +142,13 @@ fft_iin_rl = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
-THD = ha.calculate_thd(fft_iin_rl[0], fft_iin_rl[1], 60, 100)
+THD = na.calculate_thd(fft_iin_rl[0], fft_iin_rl[1], 60, 100)
 print("THD for Current RL Load: %s" % (THD))
 PF = 1/np.sqrt(1 + THD**2)
 print("Power Factor RL Load: %s\n" % (PF))
 
 # Input RC Load
-fft_vin_rc = ha.plot_fourier_transform(
+fft_vin_rc = na.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_rc.index.values,
     values = orig_in_rc["Vin (V)"].values,
@@ -158,10 +158,10 @@ fft_vin_rc = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
-THD = ha.calculate_thd(fft_vin_rc[0], fft_vin_rc[1], 60, 100)
+THD = na.calculate_thd(fft_vin_rc[0], fft_vin_rc[1], 60, 100)
 print("THD for Voltage RC Load: %s" % (THD))
 
-fft_iin_rc = ha.plot_fourier_transform(
+fft_iin_rc = na.plot_fourier_transform(
     number_samples = 2500,
     time = orig_in_rc.index.values,
     values = orig_in_rc["Iin (A)"].values,
@@ -171,13 +171,13 @@ fft_iin_rc = ha.plot_fourier_transform(
     xlimits0 = [-0.012, 0.012],
     xlimits1 = [0, 800]
 )
-THD = ha.calculate_thd(fft_iin_rc[0], fft_iin_rc[1], 60, 100)
+THD = na.calculate_thd(fft_iin_rc[0], fft_iin_rc[1], 60, 100)
 print("THD for Current RC Load: %s" % (THD))
 PF = 1/np.sqrt(1 + THD**2)
 print("Power Factor RC Load: %s\n" % (PF))
 
 # Output R Load
-fft_vout_r = ha.plot_fourier_transform(
+fft_vout_r = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_r.index.values,
     values = orig_out_r["Vout (V)"].values,
@@ -187,7 +187,7 @@ fft_vout_r = ha.plot_fourier_transform(
     xlimits0 = [-0.003, 0.003],
     xlimits1 = [0, 4800]
 )
-fft_vout_r_ylog = ha.plot_fourier_transform(
+fft_vout_r_ylog = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_r.index.values,
     values = orig_out_r["Vout (V)"].values,
@@ -198,10 +198,10 @@ fft_vout_r_ylog = ha.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
-THD = ha.calculate_thd(fft_vout_r[0], fft_vout_r[1], 360, 100)
+THD = na.calculate_thd(fft_vout_r[0], fft_vout_r[1], 360, 100)
 print("THD for Voltage Output R Load: %s" % (THD))
 
-fft_iout_r = ha.plot_fourier_transform(
+fft_iout_r = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_r.index.values,
     values = orig_out_r["Iout (A)"].values,
@@ -211,7 +211,7 @@ fft_iout_r = ha.plot_fourier_transform(
     xlimits0 = [-0.003, 0.003],
     xlimits1 = [0, 4800]
 )
-fft_iout_r_ylog = ha.plot_fourier_transform(
+fft_iout_r_ylog = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_r.index.values,
     values = orig_out_r["Iout (A)"].values,
@@ -222,11 +222,11 @@ fft_iout_r_ylog = ha.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
-THD = ha.calculate_thd(fft_iout_r[0], fft_iout_r[1], 360, 100)
+THD = na.calculate_thd(fft_iout_r[0], fft_iout_r[1], 360, 100)
 print("THD for Current Output R Load: %s\n" % (THD))
 
 # Output RL Load
-fft_vout_rl = ha.plot_fourier_transform(
+fft_vout_rl = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rl.index.values,
     values = orig_out_rl["Vout (V)"].values,
@@ -236,7 +236,7 @@ fft_vout_rl = ha.plot_fourier_transform(
     xlimits0 = [-0.003, 0.003],
     xlimits1 = [0, 4800]
 )
-fft_vout_rl_ylog = ha.plot_fourier_transform(
+fft_vout_rl_ylog = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rl.index.values,
     values = orig_out_rl["Vout (V)"].values,
@@ -247,10 +247,10 @@ fft_vout_rl_ylog = ha.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
-THD = ha.calculate_thd(fft_vout_rl[0], fft_vout_rl[1], 360, 100)
+THD = na.calculate_thd(fft_vout_rl[0], fft_vout_rl[1], 360, 100)
 print("THD for Voltage Output RL Load: %s" % (THD))
 
-fft_iout_rl = ha.plot_fourier_transform(
+fft_iout_rl = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rl.index.values,
     values = orig_out_rl["Iout (A)"].values,
@@ -260,7 +260,7 @@ fft_iout_rl = ha.plot_fourier_transform(
     xlimits0 = [-0.003, 0.003],
     xlimits1 = [0, 4800]
 )
-fft_iout_rl_ylog = ha.plot_fourier_transform(
+fft_iout_rl_ylog = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rl.index.values,
     values = orig_out_rl["Iout (A)"].values,
@@ -271,11 +271,11 @@ fft_iout_rl_ylog = ha.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
-THD = ha.calculate_thd(fft_iout_rl[0], fft_iout_rl[1], 360, 100)
+THD = na.calculate_thd(fft_iout_rl[0], fft_iout_rl[1], 360, 100)
 print("THD for Current Output RL Load: %s\n" % (THD))
 
 # Output RC Load
-fft_vout_rc = ha.plot_fourier_transform(
+fft_vout_rc = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rc.index.values,
     values = orig_out_rc["Vout (V)"].values,
@@ -285,7 +285,7 @@ fft_vout_rc = ha.plot_fourier_transform(
     xlimits0 = [-0.003, 0.003],
     xlimits1 = [0, 4800]
 )
-fft_vout_rc_ylog = ha.plot_fourier_transform(
+fft_vout_rc_ylog = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rc.index.values,
     values = orig_out_rc["Vout (V)"].values,
@@ -296,10 +296,10 @@ fft_vout_rc_ylog = ha.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
-THD = ha.calculate_thd(fft_vout_rc[0], fft_vout_rc[1], 360, 100)
+THD = na.calculate_thd(fft_vout_rc[0], fft_vout_rc[1], 360, 100)
 print("THD for Voltage Output RC Load: %s" % (THD))
 
-fft_iout_rc = ha.plot_fourier_transform(
+fft_iout_rc = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rc.index.values,
     values = orig_out_rc["Iout (A)"].values,
@@ -309,7 +309,7 @@ fft_iout_rc = ha.plot_fourier_transform(
     xlimits0 = [-0.003, 0.003],
     xlimits1 = [0, 4800]
 )
-fft_iout_rc_ylog = ha.plot_fourier_transform(
+fft_iout_rc_ylog = na.plot_fourier_transform(
     number_samples = 2083,
     time = orig_out_rc.index.values,
     values = orig_out_rc["Iout (A)"].values,
@@ -320,5 +320,5 @@ fft_iout_rc_ylog = ha.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
-THD = ha.calculate_thd(fft_iout_rc[0], fft_iout_rc[1], 360, 100)
+THD = na.calculate_thd(fft_iout_rc[0], fft_iout_rc[1], 360, 100)
 print("THD for Current Output RC Load: %s\n" % (THD))
