@@ -222,6 +222,7 @@ fft_iout_r_ylog = na.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
+print ("Currente Average for Output R Load: %s" % (na.calculate_average(orig_out_r["Iout (A)"].values, 231)/3))
 THD = na.calculate_thd(fft_iout_r[0], fft_iout_r[1], 360, 100)
 print("THD for Current Output R Load: %s\n" % (THD))
 
@@ -271,6 +272,7 @@ fft_iout_rl_ylog = na.plot_fourier_transform(
     xlimits1 = [0, 4800],
     ylog = True
 )
+print ("Currente Average for Output RL Load: %s" % (na.calculate_average(orig_out_rl["Iout (A)"].values, 231)/3))
 THD = na.calculate_thd(fft_iout_rl[0], fft_iout_rl[1], 360, 100)
 print("THD for Current Output RL Load: %s\n" % (THD))
 
