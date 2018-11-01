@@ -122,7 +122,9 @@ fft_vin_30_r = na.plot_fourier_transform(
     xlimits1 = [0, 800]
 )
 THD = na.calculate_thd(fft_vin_30_r[0], fft_vin_30_r[1], 60, 100)
+mean = na.calculate_mean()
 print("\nTHD for Voltage Alfa 30° R Load: %s" % (THD))
+print("Mean for Voltage Alfa 30° R Load: %s" % (THD))
 
 fft_iin_30_r = na.plot_fourier_transform(
     number_samples = 2500,

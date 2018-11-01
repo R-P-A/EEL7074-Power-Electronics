@@ -107,7 +107,7 @@ def plot_fourier_transform(number_samples, time, values, y_name, title, out_path
     return fft
 
 # Calculate Average
-def calculate_average(signal, period):
+def calculate_mean(signal, period):
     total = 0
     for i in range(period):
         total += signal[i]
